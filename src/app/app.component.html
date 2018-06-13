@@ -1,10 +1,15 @@
-<app-header></app-header>
+<app-header (navEvent)="onNavEventReceived($event)"></app-header>
 
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <app-recipe></app-recipe>
-      <app-shopping-list></app-shopping-list>
+      <ng-container *ngIf="itemToNavigate === ''">
+        <app-recipe></app-recipe>
+        <app-shopping-list></app-shopping-list>
+      </ng-container>
+      <app-recipe *ngIf="itemToNavigate === 'recipe'"></app-recipe>
+      <app-shopping-list *ngIf="itemToNavigate === 'shopping-list'"></app-shopping-list>
+
     </div>
   </div>
 </div>
