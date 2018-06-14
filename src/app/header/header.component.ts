@@ -11,6 +11,9 @@ export class HeaderComponent {
   @ViewChild('liRecipes') liRecipes;
   @ViewChild('liShoppingList') liShoppingList;
 
+  showHomePageEvent() {
+    this.navEvent.emit('');
+  }
 
   createRecipeEvent() {
     this.navEvent.emit('recipe');

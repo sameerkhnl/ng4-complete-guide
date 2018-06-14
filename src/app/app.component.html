@@ -10,6 +10,14 @@
       <app-recipe *ngIf="itemToNavigate === 'recipe'"></app-recipe>
       <app-shopping-list *ngIf="itemToNavigate === 'shopping-list'"></app-shopping-list>
 
+      <ng-container [ngSwitch]="itemToNavigate">
+        <p *ngSwitchCase="'recipe'">item to navigate is: recipe</p>
+        <p *ngSwitchCase="'shopping-list'">item to navigate is: shopping-list</p>
+        <p *ngSwitchDefault>item to navigate is: the home page</p>
+      </ng-container>
+
+      <!--<app-shopping-list *appUnless="!(itemToNavigate === 'shopping-list')"></app-shopping-list>-->
+
     </div>
   </div>
 </div>
