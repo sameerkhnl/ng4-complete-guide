@@ -4,8 +4,7 @@
   <div class="row">
     <div class="col-12">
       <ng-container *ngIf="itemToNavigate === ''">
-        <app-recipe></app-recipe>
-        <app-shopping-list></app-shopping-list>
+        <app-home></app-home>
       </ng-container>
       <app-recipe *ngIf="itemToNavigate === 'recipe'"></app-recipe>
       <app-shopping-list *ngIf="itemToNavigate === 'shopping-list'"></app-shopping-list>
