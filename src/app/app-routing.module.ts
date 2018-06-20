@@ -7,11 +7,11 @@ import {RecipeDetailComponent} from './recipe/recipe-detail/recipe-detail.compon
 import {RecipeItemComponent} from './recipe/recipe-list/recipe-item/recipe-item.component';
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', redirectTo: '/recipe', pathMatch: 'full'},
   {path: 'recipe', component: RecipeComponent, children: [
       {path: ':id', component: RecipeDetailComponent}
     ]},
-  {path: 'shoppingList', component: ShoppingListComponent}
+  {path: 'shopping-list', component: ShoppingListComponent}
 ];
 
 
@@ -19,8 +19,6 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
-
-
 
 export class AppRoutingModule {
 
