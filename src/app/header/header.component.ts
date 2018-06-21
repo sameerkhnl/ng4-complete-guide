@@ -20,15 +20,4 @@ export class HeaderComponent {
     this.router.navigate(['']);
   }
 
-  // navigateToRecipe() {
-  //   this.router.navigate(['recipe']);
-  //   this.liShoppingList.nativeElement.classList.remove('active')
-  //   this.liRecipes.nativeElement.classList.toggle('active');
-  // }
-
-  // navigateToShoppingList() {
-  //   this.router.navigate(['shopping-list']);
-  //   this.liRecipes.nativeElement.classList.remove('active');
-  //   this.liShoppingList.nativeElement.classList.toggle('active');
-  // }
 }
