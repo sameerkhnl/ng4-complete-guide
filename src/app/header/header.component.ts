@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,20 +12,23 @@ export class HeaderComponent {
   @ViewChild('liRecipes') liRecipes;
   @ViewChild('liShoppingList') liShoppingList;
 
-  showHomePageEvent() {
-    this.navEvent.emit('');
+  constructor(private router: Router){
+
   }
 
-  createRecipeEvent() {
-    this.navEvent.emit('recipe');
-    console.log(this.liRecipes);
-    this.liShoppingList.nativeElement.classList.remove('active')
-    this.liRecipes.nativeElement.classList.toggle('active');
+  showHomePage() {
+    this.router.navigate(['']);
   }
 
-  createShoppingListEvent() {
-    this.navEvent.emit('shopping-list');
-    this.liRecipes.nativeElement.classList.remove('active');
-    this.liShoppingList.nativeElement.classList.toggle('active');
-  }
+  // navigateToRecipe() {
+  //   this.router.navigate(['recipe']);
+  //   this.liShoppingList.nativeElement.classList.remove('active')
+  //   this.liRecipes.nativeElement.classList.toggle('active');
+  // }
+
+  // navigateToShoppingList() {
+  //   this.router.navigate(['shopping-list']);
+  //   this.liRecipes.nativeElement.classList.remove('active');
+  //   this.liShoppingList.nativeElement.classList.toggle('active');
+  // }
 }
