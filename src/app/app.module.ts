@@ -9,7 +9,7 @@ import {RecipeDetailComponent} from './recipe/recipe-detail/recipe-detail.compon
 import {RecipeItemComponent} from './recipe/recipe-list/recipe-item/recipe-item.component';
 import {ShoppingListComponent} from './shopping-list/shopping-list.component';
 import {ShoppingEditComponent} from './shopping-list/shopping-edit/shopping-edit.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BasicHighlightDirective} from './basic-highlight/basic-highlight.directive';
 import {BetterHighlightDirective} from './better-highlight/better-highlight.directive';
 import {UnlessDirective} from './unless-directive/unless.directive';
@@ -41,6 +41,7 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [ShoppingListService],
