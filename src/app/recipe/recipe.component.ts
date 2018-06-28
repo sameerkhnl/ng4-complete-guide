@@ -10,10 +10,10 @@ import {ActivatedRoute} from '@angular/router';
   providers:[RecipeService]
 })
 export class RecipeComponent implements OnInit, AfterViewChecked {
-  recipes: Recipe[] = [];
-  id: number;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {
+
+
+  constructor(private recipeService: RecipeService) {
 
   }
 
@@ -23,8 +23,7 @@ export class RecipeComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.route.params.subscribe((p) => this.id = p['id']);
-    this.recipes = this.recipeService.getAllRecipes();
+
   }
 
   ngAfterViewChecked() {

@@ -3,7 +3,7 @@
     <app-shopping-edit></app-shopping-edit>
     <hr>
     <div class="list-group">
-      <button type="button" class="list-group-item list-group-item-action" *ngFor="let ingredient of ingredients" appBetterHighlight [defaultColor]="'#E4E2E1'" mouseEnterColor="#ccffff">{{
+      <button type="button" class="list-group-item list-group-item-action" *ngFor="let ingredient of ingredients; let i = index" appBetterHighlight [defaultColor]="'#E4E2E1'" mouseEnterColor="#ccffff" (click)="onItemSelect(i)" #selectItemBtn>{{
         ingredient.name }} ({{ ingredient.amount }})
       </button>
     </div>

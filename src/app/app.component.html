@@ -1,12 +1,9 @@
-<app-header (navEvent)="onNavEventReceived($event)"></app-header>
+<app-header></app-header>
 
 <div class="container">
   <div class="row">
     <div class="col-12">
      <router-outlet></router-outlet>
-
-      <!--<app-shopping-list *appUnless="!(itemToNavigate === 'shopping-list')"></app-shopping-list>-->
-
     </div>
   </div>
 </div>
