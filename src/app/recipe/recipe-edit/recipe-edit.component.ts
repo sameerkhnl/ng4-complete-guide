@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {RecipeService} from '../recipe.service';
+import {Ingredient} from '../../shared/Ingredient';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -11,14 +13,15 @@ export class RecipeEditComponent implements OnInit {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) { }
+
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private recipeService: RecipeService) { }
 
   ngOnInit() {
     this.route.params.subscribe((p) => {
-      this.id = Number(p['id']);
       console.log(p['id']);
       if(p['id'] !== undefined){
         this.editMode = true;
+        this.id = Number(p['id']);
       }
       console.log('new mode: ' + !this.editMode);
     });
@@ -29,10 +32,34 @@ export class RecipeEditComponent implements OnInit {
       description: '',
       ingredients: this.fb.array([]),
     });
+
+    if(this.editMode){
+      const recipe = this.recipeService.getRecipeById(this.id);
+      const ingsTemp = recipe.ingredients.map(ip => this.fb.group(ip));
+      const ingredientsFormsArray = this.fb.array(ingsTemp);
+      this.recipeForm.setControl('ingredients', ingredientsFormsArray);
+      this.recipeForm.patchValue({
+        name: recipe.name,
+        imageUrl: recipe.imagePath,
+        description: recipe.description,
+      });
+      console.log(ingredientsFormsArray);
+      console.log(this.ingredients);
+    }
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    console.log(this.recipeForm.get('ingredients'));
+
   }
+
+  get ingredients(){
+    return this.recipeForm.get('ingredients') as FormArray;
+  }
+
+  onAddIngredient() {
+    this.ingredients.push(this.fb.group(new Ingredient('', 0)));
+  }
+
 
 }

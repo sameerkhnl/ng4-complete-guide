@@ -34,23 +34,34 @@
       </div>
     </div>
   </div>
-  <div formArrayName="ingredients">
-    <div class="row" *ngFor="let ingredient of ingredients; let i = index">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-8">
-            <div class="form-group">
-              <input type="text" class="form-control" formControlName="name">
+  <div class="row" *ngIf="!editMode">
+    <div class="col-12">
+      <div class="form-group">
+        <button class="btn btn-primary" type="button" (click)="onAddIngredient()">Add Ingredient</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div formArrayName="ingredients">
+        <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
+
+          <div class="row">
+            <div class="col-8">
+              <div class="form-group">
+                <input type="text" class="form-control" formControlName="name">
+              </div>
             </div>
-          </div>
-          <div class="col-2">
-            <div class="form-group">
-              <input type="number" class="form-control" formControlName="amount">
+            <div class="col-2">
+              <div class="form-group">
+                <input type="number" class="form-control" formControlName="amount">
+              </div>
             </div>
-          </div>
-          <div class="col-2">
-            <div class="form-group">
-              <button type="button" class="btn btn-danger">X</button>
+            <div class="col-2">
+              <div class="form-group">
+                <button type="button" class="btn btn-danger">X</button>
+              </div>
             </div>
           </div>
         </div>
