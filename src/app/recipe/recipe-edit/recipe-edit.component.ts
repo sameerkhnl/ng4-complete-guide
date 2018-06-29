@@ -35,38 +35,55 @@ export class RecipeEditComponent implements OnInit {
 
   }
 
-  get ingredients() {
+  get ingredients(): FormArray {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
   onAddIngredient() {
-    this.ingredients.push(this.fb.group({name: ['', Validators.required], amount: [0, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]]}));
+    this.ingredients.push(this.fb.group({
+      name: ['', Validators.required],
+      amount: [0, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]]
+    }));
   }
 
   removeIngredient(i: number) {
-    this.ingredients.controls.splice(i, 1);
-    console.log(this.ingredients.controls);
+    this.ingredients.removeAt(i);
   }
 
   onSave() {
+    this.addOrUpdateRecipe();
+  }
+
+  addOrUpdateRecipe() {
     if (this.editMode) {
-      const retrieved = this.recipeService.getRecipeById(this.id);
-      const formModel = this.recipeForm.value;
+      this.updateRecipe();
+    } else {
+      this.addRecipe();
+    }
+  }
+
+  addRecipe() {
+
+  }
+
+  updateRecipe() {
+    if (this.editMode) {
+      let retrieved = this.recipeService.getRecipeById(this.id);
+      let formModel: Recipe = this.recipeForm.value;
+      console.log(formModel.ingredients);
       const ingredientsCopy = formModel.ingredients.map((ingredient: Ingredient) => Object.assign({}, ingredient));
       const saveRecipe: Recipe = {
-        id: this.id,
+        id: Number(this.id),
         name: formModel.name,
         description: formModel.description,
-        imagePath: formModel.imageUrl,
+        imagePath: formModel.imagePath,
         ingredients: ingredientsCopy
       };
-      retrieved.name = saveRecipe.name;
-      retrieved.description = saveRecipe.description;
-      retrieved.imagePath = saveRecipe.imagePath;
-      retrieved.ingredients = saveRecipe.ingredients;
+      this.recipeService.updateRecipe(saveRecipe);
 
     }
   }
+
 
   initForm() {
     this.recipeForm = this.fb.group({
@@ -83,7 +100,10 @@ export class RecipeEditComponent implements OnInit {
 
   initFromRecipe(recipe: Recipe) {
     if (recipe.ingredients) {
-      const ingsTemp = recipe.ingredients.slice().map(i => this.fb.group({name: [i.name, Validators.required], amount: [i.amount, [Validators.required,Validators.pattern(/^[1-9]+[0-9]*$/)]]}));
+      const ingsTemp = recipe.ingredients.map(i => this.fb.group({
+        name: [i.name, Validators.required],
+        amount: [i.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]]
+      }));
       const ingredientsFormsArray = this.fb.array(ingsTemp);
       this.recipeForm.setControl('ingredients', ingredientsFormsArray);
       this.recipeForm.patchValue({

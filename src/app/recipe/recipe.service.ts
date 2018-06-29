@@ -40,4 +40,8 @@ export class RecipeService {
     return this.recipes.find(r => r.id === id);
   }
 
+  updateRecipe(recipe: Recipe) {
+    this.recipes.filter(r => r.id === recipe.id).forEach( r => this.recipes[r.id] = recipe);
+  }
+
 }
