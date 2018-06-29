@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../recipe.service';
 import {Ingredient} from '../../shared/Ingredient';
@@ -15,7 +15,7 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private recipeService: RecipeService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private recipeService: RecipeService, private router: Router) {
   }
 
   ngOnInit() {
@@ -51,7 +51,9 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSave() {
+    console.log(this.recipeForm);
     this.addOrUpdateRecipe();
+    this.recipeForm.reset();
   }
 
   addOrUpdateRecipe() {
@@ -63,17 +65,26 @@ export class RecipeEditComponent implements OnInit {
   }
 
   addRecipe() {
-
+    if(!this.editMode){
+      let formModel: Recipe = this.recipeForm.value;
+      const ingredientCopy = formModel.ingredients.map(i => Object.assign({}, i));
+      const saveRecipe: Recipe = {
+        name: formModel.name,
+        description: formModel.description,
+        imagePath: formModel.imagePath,
+        ingredients: ingredientCopy
+      };
+      this.recipeService.createRecipe(saveRecipe);
+    }
   }
 
   updateRecipe() {
     if (this.editMode) {
       let retrieved = this.recipeService.getRecipeById(this.id);
       let formModel: Recipe = this.recipeForm.value;
-      console.log(formModel.ingredients);
       const ingredientsCopy = formModel.ingredients.map((ingredient: Ingredient) => Object.assign({}, ingredient));
       const saveRecipe: Recipe = {
-        id: Number(this.id),
+        id: this.id,
         name: formModel.name,
         description: formModel.description,
         imagePath: formModel.imagePath,
@@ -88,7 +99,7 @@ export class RecipeEditComponent implements OnInit {
   initForm() {
     this.recipeForm = this.fb.group({
       name: ['', Validators.required],
-      imageUrl: ['', Validators.required],
+      imagePath: ['', Validators.required],
       description: ['', Validators.required],
       ingredients: this.fb.array([]),
     });
@@ -108,11 +119,9 @@ export class RecipeEditComponent implements OnInit {
       this.recipeForm.setControl('ingredients', ingredientsFormsArray);
       this.recipeForm.patchValue({
         name: recipe.name,
-        imageUrl: recipe.imagePath,
+        imagePath: recipe.imagePath,
         description: recipe.description,
       });
-      console.log(ingredientsFormsArray);
-      console.log(this.ingredients);
     }
   }
 
@@ -120,5 +129,11 @@ export class RecipeEditComponent implements OnInit {
     return this.recipeService.getRecipeById(this.id);
   }
 
+  onCancel() {
+    this.router.navigate(["recipe", this.id]);
+  }
 
+  onDelete(){
+    this.router.navigate(["recipe"]);
+  }
 }

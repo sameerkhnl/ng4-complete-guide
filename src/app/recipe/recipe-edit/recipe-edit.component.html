@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <button class="btn btn-success mr-3" (click)="onSave()" type="submit" [disabled]="!recipeForm.valid">Save</button>
-      <button class="btn btn-danger" type="button">Delete</button>
+      <button class="btn btn-danger" type="button" (click)="editMode? onCancel() : onDelete()">Cancel</button>
     </div>
   </div>
   <div class="row">
@@ -17,7 +17,7 @@
     <div class="col-12">
       <div class="form-group">
         <label for="imageUrl" class="col-form-label font-weight-bold">ImageUrl</label>
-        <input type="text" id="imageUrl" class="form-control" formControlName="imageUrl">
+        <input type="text" id="imageUrl" class="form-control" formControlName="imagePath">
       </div>
     </div>
   </div>

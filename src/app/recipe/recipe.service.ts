@@ -1,7 +1,9 @@
 import {Recipe} from './recipe.model';
 import {Ingredient} from '../shared/Ingredient';
+import {Subject} from 'rxjs';
 
 export class RecipeService {
+  recipeChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
     new Recipe(0, 'Pizza Margherita',
       'Even a novice cook can master the art of pizza with our simple step-by-step guide. Bellissimo',
@@ -12,14 +14,19 @@ export class RecipeService {
       'https://cdn.pixabay.com/photo/2015/06/17/07/34/dessert-812050_1280.jpg', [
         new Ingredient('plain flour', 150), new Ingredient('cinnamon', 1), new Ingredient('butter', 30), new Ingredient('egg', 1)])
   ];
-
   selectedRecipe: Recipe;
 
   //recipeEmitter = new EventEmitter<Recipe>();
 
-  createNewRecipe() {
+  createNewEmptyRecipe() {
     this.recipes.push(new Recipe(this.recipes.length, 'hello', '', '', []));
+  }
 
+  createRecipe(recipe: Recipe) {
+    recipe.id = this.recipes.length;
+    this.recipes.push(recipe);
+    this.recipeChanged.next(this.recipes.slice());
+    console.log(this.recipes);
   }
 
   selectRecipe(recipe: Recipe) {
@@ -42,6 +49,7 @@ export class RecipeService {
 
   updateRecipe(recipe: Recipe) {
     this.recipes.filter(r => r.id === recipe.id).forEach( r => this.recipes[r.id] = recipe);
+    this.recipeChanged.next(this.recipes.slice());
   }
 
 }

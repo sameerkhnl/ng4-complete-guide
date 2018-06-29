@@ -14,4 +14,11 @@ export class Recipe {
     this.imagePath = imagePath;
     this.ingredients = ingredients;
   }
+
+  constructor(name: string, description: string, imagePath: string, ingredients: Ingredient[]){
+    this.name = name;
+    this.description = description;
+    this.imagePath = imagePath;
+    this.ingredients = ingredients;
+  }
 }
