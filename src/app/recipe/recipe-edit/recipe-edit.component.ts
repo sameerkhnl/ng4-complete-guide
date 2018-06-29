@@ -65,7 +65,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   addRecipe() {
-    if(!this.editMode){
+    if (!this.editMode) {
       let formModel: Recipe = this.recipeForm.value;
       const ingredientCopy = formModel.ingredients.map(i => Object.assign({}, i));
       const saveRecipe: Recipe = {
@@ -130,10 +130,11 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(["recipe", this.id]);
-  }
-
-  onDelete(){
-    this.router.navigate(["recipe"]);
+    if (this.editMode) {
+      this.router.navigate(['../'], {relativeTo: this.route});
+    } else {
+      this.router.navigate(["recipe"]);
+    }
   }
 }
+

@@ -11,7 +11,7 @@ export class RecipeService {
 
     new Recipe(1, 'Cannoli',
       'A classic Italian pastry with a crisp shell and creamy, sweet ricotta filling, it\'s a moreish treat',
-      'https://cdn.pixabay.com/photo/2015/06/17/07/34/dessert-812050_1280.jpg', [
+      'https://upload.wikimedia.org/wikipedia/commons/1/14/Cannolo_siciliano_with_chocolate_squares.jpg', [
         new Ingredient('plain flour', 150), new Ingredient('cinnamon', 1), new Ingredient('butter', 30), new Ingredient('egg', 1)])
   ];
   selectedRecipe: Recipe;

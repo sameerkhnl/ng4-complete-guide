@@ -1,13 +1,11 @@
-import {AfterViewChecked, Component, Input, OnChanges, OnInit} from '@angular/core';
-import {Recipe} from './recipe.model';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {RecipeService} from './recipe.service';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.css'],
-  providers:[RecipeService]
+  providers:[]
 })
 export class RecipeComponent implements OnInit, AfterViewChecked {
 
