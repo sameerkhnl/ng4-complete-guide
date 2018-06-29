@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {RecipeService} from '../recipe.service';
 import {Ingredient} from '../../shared/Ingredient';
+import {Recipe} from '../recipe.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -34,17 +35,9 @@ export class RecipeEditComponent implements OnInit {
     });
 
     if(this.editMode){
-      const recipe = this.recipeService.getRecipeById(this.id);
-      const ingsTemp = recipe.ingredients.map(ip => this.fb.group(ip));
-      const ingredientsFormsArray = this.fb.array(ingsTemp);
-      this.recipeForm.setControl('ingredients', ingredientsFormsArray);
-      this.recipeForm.patchValue({
-        name: recipe.name,
-        imageUrl: recipe.imagePath,
-        description: recipe.description,
-      });
-      console.log(ingredientsFormsArray);
-      console.log(this.ingredients);
+      this.setIngredients(this.recipeService.getRecipeById(this.id));
+
+
     }
   }
 
@@ -58,7 +51,45 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onAddIngredient() {
-    this.ingredients.push(this.fb.group(new Ingredient('', 0)));
+    this.ingredients.push(this.fb.group({name: '', amount: 0}));
+  }
+
+  removeIngredient(i: number) {
+    this.ingredients.controls.splice(i, 1);
+    console.log(this.ingredients.controls);
+  }
+
+  onSave() {
+    if(this.editMode){
+      const retrieved = this.recipeService.getRecipeById(this.id);
+     const formModel = this.recipeForm.value;
+     const ingredientsCopy = formModel.ingredients.map((ingredient: Ingredient) => Object.assign({}, ingredient));
+     const saveRecipe: Recipe = {
+       id: this.id,
+       name: formModel.name,
+       description: formModel.description,
+      imagePath: formModel.imageUrl,
+      ingredients: ingredientsCopy
+     }
+     retrieved.name = saveRecipe.name;
+     retrieved.description = saveRecipe.description;
+     retrieved.imagePath = saveRecipe.imagePath;
+     retrieved.ingredients = saveRecipe.ingredients;
+
+    }
+  }
+
+  setIngredients(recipe: Recipe) {
+    const ingsTemp = recipe.ingredients.slice().map(i => this.fb.group({name: i.name, amount: i.amount}));
+    const ingredientsFormsArray = this.fb.array(ingsTemp);
+    this.recipeForm.setControl('ingredients', ingredientsFormsArray);
+    this.recipeForm.patchValue({
+      name: recipe.name,
+      imageUrl: recipe.imagePath,
+      description: recipe.description,
+    });
+    console.log(ingredientsFormsArray);
+    console.log(this.ingredients);
   }
 
 
