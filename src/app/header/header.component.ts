@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
+import {DataStorageService} from '../shared/data-storage.service';
+import {Recipe} from '../recipe/recipe.model';
+import {RecipeService} from '../recipe/recipe.service';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +15,21 @@ export class HeaderComponent {
   @ViewChild('liRecipes') liRecipes;
   @ViewChild('liShoppingList') liShoppingList;
 
-  constructor(private router: Router){
+  constructor(private router: Router, private dataStorageService: DataStorageService, private recipeService: RecipeService){
 
   }
 
   showHomePage() {
     this.router.navigate(['']);
+  }
+
+  onSave(){
+    this.dataStorageService.putRecipes().subscribe((response) => console.log(response), (error) => console.log(error));
+  }
+
+  onFetch() {
+    let recipes: Recipe[];
+    this.dataStorageService.getRecipes();
   }
 
 }

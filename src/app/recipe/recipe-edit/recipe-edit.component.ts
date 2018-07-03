@@ -92,7 +92,6 @@ export class RecipeEditComponent implements OnInit {
         ingredients: ingredientsCopy
       };
       this.recipeService.updateRecipe(saveRecipe);
-
     }
   }
 
