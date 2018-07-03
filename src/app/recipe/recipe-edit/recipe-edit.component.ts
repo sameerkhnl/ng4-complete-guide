@@ -69,6 +69,7 @@ export class RecipeEditComponent implements OnInit {
       let formModel: Recipe = this.recipeForm.value;
       const ingredientCopy = formModel.ingredients.map(i => Object.assign({}, i));
       const saveRecipe: Recipe = {
+        id: null,
         name: formModel.name,
         description: formModel.description,
         imagePath: formModel.imagePath,
