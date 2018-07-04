@@ -1,5 +1,6 @@
 import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {RecipeService} from './recipe.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-recipe',

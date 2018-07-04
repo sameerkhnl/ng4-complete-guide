@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {DataStorageService} from '../shared/data-storage.service';
 import {Recipe} from '../recipe/recipe.model';
 import {RecipeService} from '../recipe/recipe.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent {
   @ViewChild('liRecipes') liRecipes;
   @ViewChild('liShoppingList') liShoppingList;
 
-  constructor(private router: Router, private dataStorageService: DataStorageService, private recipeService: RecipeService){
+  constructor(private router: Router, private dataStorageService: DataStorageService, private recipeService: RecipeService, private authService: AuthService){
 
   }
 
@@ -31,5 +32,12 @@ export class HeaderComponent {
     let recipes: Recipe[];
     this.dataStorageService.getRecipes();
   }
+
+  onLogout(){
+    this.authService.logout();
+    this.showHomePage();
+  }
+
+
 
 }

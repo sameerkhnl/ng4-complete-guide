@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" [routerLink] ="['/']" >Recipe Book</a>
+  <a class="navbar-brand" [routerLink]="['/']">Recipe Book</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,20 +7,35 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="nav nav-tabs mr-auto">
       <li class="nav-item" #liRecipes>
-        <a class="nav-link" [routerLink]="['/recipe']" routerLinkActive="active">Recipes <span class="sr-only">(current)</span> </a>
+        <a class="nav-link" [routerLink]="['/recipe']" routerLinkActive="active">Recipes <span
+          class="sr-only">(current)</span> </a>
       </li>
       <li class="nav-item" #liShoppingList>
         <a class="nav-link" [routerLink]="['/shopping-list']" routerLinkActive="active">Shopping List</a>
       </li>
     </ul>
     <ul class="navbar-nav mr-auto ml-auto">
-      <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" appDropdown="">Manage</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" style="cursor: pointer" (click)="onSave()">Save data</a>
-          <a class="dropdown-item" style="cursor: pointer" (click)="onFetch()">Fetch data</a>
-        </div>
-      </li>
+      <ng-container *ngIf="!authService.isAuthenticated()">
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer;" routerLink="signup">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer;" routerLink="signin">Sign in</a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="authService.isAuthenticated()">
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer;" (click)="onLogout()">Log out</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+             appDropdown="">Manage</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" style="cursor: pointer" (click)="onSave()">Save data</a>
+            <a class="dropdown-item" style="cursor: pointer" (click)="onFetch()">Fetch data</a>
+          </div>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </nav>
