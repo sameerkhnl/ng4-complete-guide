@@ -38,6 +38,10 @@ export class HeaderComponent {
     this.showHomePage();
   }
 
+  get authenticated(): boolean{
+    return this.authService.isAuthenticated();
+  }
+
 
 
 }

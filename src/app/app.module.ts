@@ -24,7 +24,6 @@ import {CoreModule} from './core/core.module';
     HttpClientModule,
     SharedModule,
     AuthModule,
-    RecipesModule,
     CoreModule
   ],
   providers: [],

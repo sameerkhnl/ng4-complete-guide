@@ -7,6 +7,7 @@ import {ShoppingListRoutingModule} from './shopping-list-routing.module';
 import {FormsModule} from '@angular/forms';
 import {BetterHighlightDirective} from '../better-highlight/better-highlight.directive';
 import {BasicHighlightDirective} from '../basic-highlight/basic-highlight.directive';
+import {UnlessDirective} from '../unless-directive/unless.directive';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import {BasicHighlightDirective} from '../basic-highlight/basic-highlight.direct
     ShoppingEditComponent,
     BetterHighlightDirective,
     BasicHighlightDirective,
+    UnlessDirective
   ],
   imports: [
     CommonModule,
