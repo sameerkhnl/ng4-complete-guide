@@ -12,23 +12,22 @@ import {HttpClientModule} from '@angular/common/http';
 import {DataStorageService} from './shared/data-storage.service';
 import {SharedModule} from './shared/shared.module';
 import {AuthModule} from './auth/auth-module/auth.module';
+import {RecipesModule} from './recipe/recipes.module';
+import {CoreModule} from './core/core.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    UnlessDirective,
-    HomeComponent,
-
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     SharedModule,
     AuthModule,
+    RecipesModule,
+    CoreModule
   ],
-  providers: [ShoppingListService, RecipeService, DataStorageService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
