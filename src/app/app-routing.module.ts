@@ -1,13 +1,5 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {RecipeComponent} from './recipe/recipe.component';
-import {ShoppingListComponent} from './shopping-list/shopping-list.component';
-import {RecipeDetailComponent} from './recipe/recipe-detail/recipe-detail.component';
-import {RecipeStartComponent} from './recipe/recipe-start/recipe-start.component';
-import {RecipeEditComponent} from './recipe/recipe-edit/recipe-edit.component';
-import {SignupComponent} from './auth/signup/signup.component';
-import {SigninComponent} from './auth/signin/signin.component';
-import {AuthGuardService} from './auth/auth-guard.service';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 
 const appRoutes: Routes = [
@@ -18,7 +10,7 @@ const appRoutes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 
