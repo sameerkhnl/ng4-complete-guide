@@ -7,6 +7,8 @@ import {RecipeService} from '../recipe/recipe.service';
 import {DataStorageService} from '../shared/data-storage.service';
 import {AppRoutingModule} from '../app-routing.module';
 import {SharedModule} from '../shared/shared.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from '../shared/auth.interceptor';
 
 @NgModule({
   imports: [
@@ -19,7 +21,7 @@ import {SharedModule} from '../shared/shared.module';
     HomeComponent,
   ],
 
-  providers: [ShoppingListService, RecipeService, DataStorageService],
+  providers: [ShoppingListService, RecipeService, DataStorageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
   exports: [AppRoutingModule, HeaderComponent]
 })
