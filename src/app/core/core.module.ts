@@ -9,6 +9,7 @@ import {AppRoutingModule} from '../app-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '../shared/auth.interceptor';
+import {LoggingInterceptor} from '../shared/logging.interceptor';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import {AuthInterceptor} from '../shared/auth.interceptor';
     HomeComponent,
   ],
 
-  providers: [ShoppingListService, RecipeService, DataStorageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [ShoppingListService, RecipeService, DataStorageService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true}],
 
   exports: [AppRoutingModule, HeaderComponent]
 })
