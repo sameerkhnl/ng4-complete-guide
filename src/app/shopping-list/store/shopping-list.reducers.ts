@@ -1,6 +1,5 @@
 import {Ingredient} from '../../shared/Ingredient';
-import {ADD_INGREDIENT, ADD_INGREDIENTS, AddIngredient, ShoppingListActions} from './shopping-list.actions';
-import {forEach} from '@angular/router/src/utils/collection';
+import {ADD_INGREDIENT, ADD_INGREDIENTS, DELETE_INGREDIENT, ShoppingListActions, UPDATE_INGREDIENTS} from './shopping-list.actions';
 
 export const initialState = {
   ingredients: [new Ingredient('apples', 5),
@@ -19,6 +18,18 @@ export function ShoppingListReducer(state = initialState, action: ShoppingListAc
 
     case ADD_INGREDIENTS:
       action.payload.forEach(i => state.ingredients.push(i));
+      return {
+        ...state
+      };
+
+    case UPDATE_INGREDIENTS:
+      state.ingredients[action.index] = action.payload;
+      return {
+        ...state
+      };
+
+    case DELETE_INGREDIENT:
+      state.ingredients.splice(action.index, 1);
       return {
         ...state
       };
