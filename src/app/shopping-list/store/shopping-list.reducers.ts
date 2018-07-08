@@ -16,8 +16,9 @@ export function ShoppingListReducer(state = initialState, action: ShoppingListAc
       }
 
     default:
+      //console.log('default state returning...');
       return {
-        state
+        ...state
       }
 
   }
