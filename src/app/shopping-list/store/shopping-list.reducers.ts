@@ -4,9 +4,15 @@ import {
   ADD_INGREDIENTS,
   DELETE_INGREDIENT,
   ShoppingListActions,
-  STARTED_EDITING,
+  STARTED_EDITING, STOP_EDIT,
   UPDATE_INGREDIENTS
 } from './shopping-list.actions';
+
+
+export interface State {
+  ingredients: Ingredient[],
+
+}
 
 export const initialState = {
   ingredients: [new Ingredient('apples', 5),
@@ -33,14 +39,20 @@ export function ShoppingListReducer(state = initialState, action: ShoppingListAc
 
     case UPDATE_INGREDIENTS:
       state.ingredients[state.editedIngredientIndex] = action.payload;
+
       return {
-        ...state
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
 
     case DELETE_INGREDIENT:
       state.ingredients.splice(state.editedIngredientIndex, 1);
+
       return {
-        ...state
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
 
     case STARTED_EDITING:
@@ -49,6 +61,14 @@ export function ShoppingListReducer(state = initialState, action: ShoppingListAc
       return {
         ...state
       };
+
+    case STOP_EDIT:
+
+      return {
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
+      }
     default:
       //console.log('default state returning...');
       return {

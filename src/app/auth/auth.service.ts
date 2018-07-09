@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as firebase from 'firebase';
-import {st} from '@angular/core/src/render3';
 import {Router} from '@angular/router';
 
 @Injectable({

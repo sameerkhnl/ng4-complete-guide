@@ -1,0 +1,29 @@
+import * as firebase from 'firebase';
+import {AuthActions, GET_TOKEN, LOG_OUT, SIGN_IN, SIGN_UP} from './auth.actions';
+
+export interface State {
+  token: string;
+  authenticated: boolean;
+}
+
+export const initialState: State = {
+  token: null,
+  authenticated: false
+}
+
+export function AuthReducer(state = initialState, action: AuthActions) {
+  switch (action.type){
+    case SIGN_UP:
+      firebase.auth().createUserWithEmailAndPassword(action.payload.username, action.payload.password).catch(error => console.log(error));
+
+    case SIGN_IN:
+      firebase.auth().signInWithEmailAndPassword(action.payload.username, action.payload.password).catch(error => console.log(error));
+
+    case GET_TOKEN:
+      firebase.auth().currentUser.getIdToken().then(t => state.token = t);
+
+    case LOG_OUT:
+      firebase.auth().signOut();
+
+  }
+}

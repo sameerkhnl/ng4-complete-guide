@@ -3,7 +3,8 @@ import {Ingredient} from '../../shared/Ingredient';
 import {NgForm} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
-import {AddIngredient, DeleteIngredient, UpdateIngredient} from '../store/shopping-list.actions';
+import {AddIngredient, DeleteIngredient, StopEdit, UpdateIngredient} from '../store/shopping-list.actions';
+import * as fromApp from '../../store/app.reducers'
 
 @Component({
   selector: 'app-shopping-edit',
@@ -13,17 +14,17 @@ import {AddIngredient, DeleteIngredient, UpdateIngredient} from '../store/shoppi
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   @ViewChild('f') slForm: NgForm;
   @ViewChild('submitBtn') submitBtn: ElementRef;
-  subscription: Subscription;
   editMode = false;
   shoppingListState: Observable<{ ingredients: Ingredient[], editedIngredient: Ingredient, editedIngredientIndex: number }>;
+  subscription: Subscription;
 
-  constructor(private store: Store<{ shoppingList: { ingredients: Ingredient[], editedIngredient: Ingredient, editedIngredientIndex: number } }>) {
+  constructor(private store: Store<fromApp.AppState>) {
 
   }
 
   ngOnInit() {
     this.shoppingListState = this.store.select('shoppingList');
-    this.shoppingListState.subscribe(x => {
+    this.subscription = this.shoppingListState.subscribe(x => {
       if (x.editedIngredientIndex !== -1) {
         this.editMode = true;
         this.slForm.setValue({
@@ -41,7 +42,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       this.store.dispatch(new UpdateIngredient(new Ingredient(ingName, ingAmount)));
       //this.shoppingListService.updateIngredient(new Ingredient(ingName, ingAmount), this.editItemIndex);
-      this.editMode = false;
+
     } else {
       this.store.dispatch(new AddIngredient(new Ingredient(ingName, ingAmount)));
       //this.shoppingListService.addIngredient(new Ingredient(ingName, ingAmount));
@@ -61,10 +62,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.clearForm();
   }
 
-
-  ngOnDestroy() {
+  ngOnDestroy(){
+    this.store.dispatch(new StopEdit());
     this.subscription.unsubscribe();
   }
+
 
 
 }

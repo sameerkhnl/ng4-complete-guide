@@ -4,6 +4,8 @@ import {Observable, Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {StartedEditing} from './store/shopping-list.actions';
 
+import * as fromApp from '../store/app.reducers';
+
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
@@ -14,7 +16,7 @@ export class ShoppingListComponent implements OnInit {
   shoppingListState: Observable<{ingredients: Ingredient[]}>;
   private subs: Subscription;
 
-  constructor(private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {
+  constructor(private store: Store<fromApp.AppState>) {
 
   }
 
@@ -26,4 +28,5 @@ export class ShoppingListComponent implements OnInit {
   onItemSelect(i: number){
     this.store.dispatch(new StartedEditing(i));
   }
+
 }
