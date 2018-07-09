@@ -35,9 +35,6 @@ export class UpdateIngredient implements Action {
 
 export class DeleteIngredient implements Action {
   readonly type = DELETE_INGREDIENT;
-  constructor(public index: number){
-
-  }
 }
 
 export class StartedEditing implements Action {
