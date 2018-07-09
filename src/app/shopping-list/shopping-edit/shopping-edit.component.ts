@@ -2,7 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {Ingredient} from '../../shared/Ingredient';
 import {ShoppingListService} from '../shopping-list.service';
 import {NgForm} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {ADD_INGREDIENT, AddIngredient, DeleteIngredient, UpdateIngredient} from '../store/shopping-list.actions';
 
@@ -18,23 +18,24 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editMode = false;
   editItemIndex: number;
   ingredientEdited = new Ingredient('', 0);
+  shoppingListState: Observable<{ingredients: Ingredient[], editedIngredient: Ingredient, editedIngredientIndex: number}>;
 
-  constructor(private shoppingListService: ShoppingListService, private store: Store<{shoppingList: {ingredientsL: Ingredient[]}}>) {
+  constructor(private shoppingListService: ShoppingListService, private store: Store<{shoppingList: {ingredients: Ingredient[], editedIngredient: Ingredient, editedIngredientIndex: number}}>) {
 
   }
 
   ngOnInit() {
-    this.subscription = this.shoppingListService.startedEditing.subscribe((i: number) => {
-      this.editItemIndex = i;
-      this.editMode = true;
-      this.ingredientEdited = this.shoppingListService.getAllIngredients()[i];
-      this.slForm.setValue({
-        name: this.ingredientEdited.name,
-        amount: this.ingredientEdited.amount,
-      });
-      console.log(this.submitBtn);
-
+    this.shoppingListState = this.store.select('shoppingList');
+    this.shoppingListState.subscribe(x => {
+      if(x.editedIngredientIndex !== -1){
+        this.editMode = true;
+        this.slForm.setValue({
+          name: x.editedIngredient.name,
+          amount: x.editedIngredient.amount
+        });
+      }
     });
+
   }
 
   addOrUpdateIngredient() {

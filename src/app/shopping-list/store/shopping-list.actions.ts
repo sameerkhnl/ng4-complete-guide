@@ -5,6 +5,7 @@ export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const ADD_INGREDIENTS = "ADD_INGREDIENTS";
 export const UPDATE_INGREDIENTS= "UPDATE_INGREDIENTS";
 export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
+export const STARTED_EDITING = "STARTED_EDITING";
 
 export class AddIngredient implements Action {
   readonly type = ADD_INGREDIENT;
@@ -39,4 +40,10 @@ export class DeleteIngredient implements Action {
   }
 }
 
-export type ShoppingListActions = AddIngredient | AddIngredients | UpdateIngredient | DeleteIngredient;
+export class StartedEditing implements Action {
+  readonly type = STARTED_EDITING;
+  constructor(public index: number){
+  }
+}
+
+export type ShoppingListActions = AddIngredient | AddIngredients | UpdateIngredient | DeleteIngredient | StartedEditing;
