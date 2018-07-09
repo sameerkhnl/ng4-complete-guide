@@ -32,7 +32,7 @@ export function ShoppingListReducer(state = initialState, action: ShoppingListAc
       };
 
     case UPDATE_INGREDIENTS:
-      state.ingredients[action.index] = action.payload;
+      state.ingredients[state.editedIngredientIndex] = action.payload;
       return {
         ...state
       };
