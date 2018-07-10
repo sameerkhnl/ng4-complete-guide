@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from '../auth.service';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import * as fromApp from '../../store/app.reducers';

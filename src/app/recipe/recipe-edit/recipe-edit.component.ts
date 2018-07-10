@@ -4,6 +4,10 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../recipe.service';
 import {Ingredient} from '../../shared/Ingredient';
 import {Recipe} from '../recipe.model';
+import * as fromRecipe from '../store/recipe.reducers';
+import {Store} from '@ngrx/store';
+import * as fromRecipeActions from '../store/recipe.actions';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -15,7 +19,7 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private recipeService: RecipeService, private router: Router) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private store: Store<fromRecipe.FeatureState>) {
   }
 
   ngOnInit() {
@@ -75,13 +79,12 @@ export class RecipeEditComponent implements OnInit {
         imagePath: formModel.imagePath,
         ingredients: ingredientCopy
       };
-      this.recipeService.createRecipe(saveRecipe);
+      this.store.dispatch(new fromRecipeActions.AddRecipe(saveRecipe));
     }
   }
 
   updateRecipe() {
     if (this.editMode) {
-      let retrieved = this.recipeService.getRecipeById(this.id);
       let formModel: Recipe = this.recipeForm.value;
       const ingredientsCopy = formModel.ingredients.map((ingredient: Ingredient) => Object.assign({}, ingredient));
       const saveRecipe: Recipe = {
@@ -91,7 +94,7 @@ export class RecipeEditComponent implements OnInit {
         imagePath: formModel.imagePath,
         ingredients: ingredientsCopy
       };
-      this.recipeService.updateRecipe(saveRecipe);
+      this.store.dispatch(new fromRecipeActions.UpdateRecipe({index: this.id, updatedRecipe: saveRecipe}))
     }
   }
 
@@ -105,7 +108,10 @@ export class RecipeEditComponent implements OnInit {
     });
 
     if (this.editMode) {
-      this.initFromRecipe(this.recipe);
+      this.store.select('recipes').pipe(take(1)).subscribe((recipeState: fromRecipe.State) => {
+        const recipe = recipeState.recipes[this.id];
+        this.initFromRecipe(recipe);
+      });
     }
   }
 
@@ -123,10 +129,6 @@ export class RecipeEditComponent implements OnInit {
         description: recipe.description,
       });
     }
-  }
-
-  get recipe() {
-    return this.recipeService.getRecipeById(this.id);
   }
 
   onCancel() {

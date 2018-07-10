@@ -6,7 +6,7 @@
 <hr>
 <div class="row">
   <div class="col-12">
-    <div class="list-group" *ngFor="let recipe of recipes">
+    <div class="list-group" *ngFor="let recipe of (recipesState | async).recipes">
       <app-recipe-item [recipe] = recipe ></app-recipe-item>
     </div>
   </div>

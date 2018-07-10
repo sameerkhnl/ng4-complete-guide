@@ -5,6 +5,7 @@ import {map, mergeMap, switchMap} from 'rxjs/operators';
 import * as firebase from 'firebase';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {Router} from '@angular/router';
+import {AuthActions} from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -46,5 +47,10 @@ export class AuthEffects {
       type: fromAuthActions.SET_TOKEN,
         payload: token
     }];
+  }));
+
+  @Effect({dispatch: false})
+  authLogOut = this.actions$.ofType(fromAuthActions.LOG_OUT).pipe(map((action: fromAuthActions.LogOut) => {
+    this.router.navigate(['/']);
   }));
 }

@@ -1,10 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {AuthService} from '../auth.service';
 import * as fromApp from '../../store/app.reducers';
 import {Store} from '@ngrx/store';
 import * as fromAuthActions from '../auth-module/store/auth.actions';
-import {TrySignUp} from '../auth-module/store/auth.actions';
 
 
 @Component({
