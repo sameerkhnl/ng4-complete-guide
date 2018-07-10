@@ -1,31 +1,41 @@
-
-
+export const TRY_SIGN_UP = "TRY_SIGN_UP";
+export const TRY_SIGN_IN = "TRY_SIGN_IN";
 export const SIGN_UP = "SIGN_UP";
 export const SIGN_IN = "SIGN_IN";
-export const GET_TOKEN = "GET_TOKEN";
+export const SET_TOKEN = "SET_TOKEN";
 export const LOG_OUT = "LOG_OUT";
 
-
-
-export class SignUP {
-  readonly type = SIGN_UP;
+export class TrySignUp {
+  readonly type = TRY_SIGN_UP;
 
   constructor(public payload: {username: string, password: string}){
 
   }
 }
+
+export class TrySignIn {
+  readonly type = TRY_SIGN_IN;
+
+  constructor(public payload: {username: string, password: string}){
+
+  }
+}
+
+export class SignUp {
+  readonly type = SIGN_UP;
+}
+
 
 export class SignIn {
   readonly type = SIGN_IN;
-
-  constructor(public payload: {username: string, password: string}){
-
-  }
 }
 
-export class GetToken {
-  readonly type = GET_TOKEN;
+export class SetToken {
+  readonly type = SET_TOKEN;
 
+  constructor(public payload: string){
+
+  }
 }
 
 export class LogOut {
@@ -34,4 +44,4 @@ export class LogOut {
 
 
 
-export type AuthActions = SignUP | SignIn | GetToken | LogOut;
+export type AuthActions = SignUp | SignIn | SetToken | LogOut | TrySignUp | TrySignIn;

@@ -5,6 +5,7 @@ import {Observable, Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AddIngredient, DeleteIngredient, StopEdit, UpdateIngredient} from '../store/shopping-list.actions';
 import * as fromApp from '../../store/app.reducers'
+import * as fromShopping from '../store/shopping-list.reducers';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -15,7 +16,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   @ViewChild('f') slForm: NgForm;
   @ViewChild('submitBtn') submitBtn: ElementRef;
   editMode = false;
-  shoppingListState: Observable<{ ingredients: Ingredient[], editedIngredient: Ingredient, editedIngredientIndex: number }>;
+  shoppingListState: Observable<fromShopping.State>;
   subscription: Subscription;
 
   constructor(private store: Store<fromApp.AppState>) {

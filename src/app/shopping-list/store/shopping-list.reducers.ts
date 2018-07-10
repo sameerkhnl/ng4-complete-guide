@@ -11,7 +11,8 @@ import {
 
 export interface State {
   ingredients: Ingredient[],
-
+  editedIngredient: Ingredient,
+  editedIngredientIndex: number
 }
 
 export const initialState = {

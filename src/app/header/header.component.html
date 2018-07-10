@@ -15,7 +15,7 @@
       </li>
     </ul>
     <ul class="navbar-nav mr-auto ml-auto">
-      <ng-container *ngIf="!authenticated">
+      <ng-container *ngIf="!(authState | async).authenticated">
         <li class="nav-item">
           <a class="nav-link" style="cursor: pointer;" routerLink="signup">Register</a>
         </li>
@@ -23,7 +23,7 @@
           <a class="nav-link" style="cursor: pointer;" routerLink="signin">Sign in</a>
         </li>
       </ng-container>
-      <ng-container *ngIf="authenticated">
+      <ng-container *ngIf="(authState | async).authenticated">
         <li class="nav-item">
           <a class="nav-link" style="cursor: pointer;" (click)="onLogout()">Log out</a>
         </li>

@@ -1,9 +1,14 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataStorageService} from '../shared/data-storage.service';
 import {Recipe} from '../recipe/recipe.model';
 import {RecipeService} from '../recipe/recipe.service';
-import {AuthService} from '../auth/auth.service';
+import * as fromApp from '../store/app.reducers';
+import {Store} from '@ngrx/store';
+import {LogOut} from '../auth/auth-module/store/auth.actions';
+import {Observable} from 'rxjs';
+
+import * as fromAuth from '../auth/auth-module/store/auth.reducer';
 
 @Component({
   selector: 'app-header',
@@ -11,13 +16,18 @@ import {AuthService} from '../auth/auth.service';
   styleUrls: ['./header.component.css'],
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Output() navEvent= new EventEmitter<string>();
   @ViewChild('liRecipes') liRecipes;
   @ViewChild('liShoppingList') liShoppingList;
+  authState: Observable<fromAuth.State>;
 
-  constructor(private router: Router, private dataStorageService: DataStorageService, private recipeService: RecipeService, private authService: AuthService){
+  constructor(private router: Router, private dataStorageService: DataStorageService, private recipeService: RecipeService, private store: Store<fromApp.AppState>){
 
+  }
+
+  ngOnInit() {
+    this.authState = this.store.select('auth');
   }
 
   showHomePage() {
@@ -34,14 +44,8 @@ export class HeaderComponent {
   }
 
   onLogout(){
-    this.authService.logout();
+    this.store.dispatch(new LogOut());
     this.showHomePage();
   }
-
-  get authenticated(): boolean{
-    return this.authService.isAuthenticated();
-  }
-
-
 
 }
