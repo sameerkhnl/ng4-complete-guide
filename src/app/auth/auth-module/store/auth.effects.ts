@@ -23,7 +23,7 @@ export class AuthEffects {
     return fromPromise(firebase.auth().currentUser.getIdToken());
   }), mergeMap((token: string) => {
     return [{
-      type: fromAuthActions.SIGN_UP,
+      type: fromAuthActions.SIGN_UP
     },
       {
         type: fromAuthActions.SET_TOKEN,

@@ -7,6 +7,7 @@ import * as fromApp from '../store/app.reducers';
 import {Store} from '@ngrx/store';
 import {LogOut} from '../auth/auth-module/store/auth.actions';
 import {Observable} from 'rxjs';
+import * as fromRecipeActions from '../recipe/store/recipe.actions';
 
 import * as fromAuth from '../auth/auth-module/store/auth.reducer';
 
@@ -35,12 +36,12 @@ export class HeaderComponent implements OnInit {
   }
 
   onSave(){
-    this.dataStorageService.putRecipes().subscribe((response) => console.log(response), (error) => console.log(error));
+    this.store.dispatch(new fromRecipeActions.StoreRecipes());
   }
 
   onFetch() {
     let recipes: Recipe[];
-    this.dataStorageService.getRecipes();
+    this.store.dispatch(new fromRecipeActions.FetchRecipes());
   }
 
   onLogout(){

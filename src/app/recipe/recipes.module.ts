@@ -10,6 +10,8 @@ import {RecipesRoutingModule} from './recipes-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {StoreModule} from '@ngrx/store';
 import {RecipeReducer} from './store/recipe.reducers';
+import {EffectsModule} from '@ngrx/effects';
+import {RecipeEffects} from './store/recipe.effects';
 
 @NgModule({
   declarations:[
@@ -26,7 +28,7 @@ import {RecipeReducer} from './store/recipe.reducers';
     RecipesRoutingModule,
     SharedModule,
     StoreModule.forFeature('recipes', RecipeReducer),
-
+    EffectsModule.forFeature([RecipeEffects])
   ]
 })
 
