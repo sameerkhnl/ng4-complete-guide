@@ -1,8 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {DataStorageService} from '../shared/data-storage.service';
 import {Recipe} from '../recipe/recipe.model';
-import {RecipeService} from '../recipe/recipe.service';
 import * as fromApp from '../store/app.reducers';
 import {Store} from '@ngrx/store';
 import {LogOut} from '../auth/auth-module/store/auth.actions';
@@ -23,7 +21,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('liShoppingList') liShoppingList;
   authState: Observable<fromAuth.State>;
 
-  constructor(private router: Router, private dataStorageService: DataStorageService, private recipeService: RecipeService, private store: Store<fromApp.AppState>){
+  constructor(private router: Router, private store: Store<fromApp.AppState>){
 
   }
 
